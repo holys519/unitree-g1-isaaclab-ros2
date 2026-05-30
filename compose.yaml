@@ -1,0 +1,25 @@
+services:
+  g1-dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        USER_UID: ${HOST_UID:-1000}
+        USER_GID: ${HOST_GID:-1000}
+    image: unitree-g1-dev:humble
+    container_name: unitree-g1-dev
+    network_mode: host
+    ipc: host
+    environment:
+      DISPLAY: ${DISPLAY:-}
+      QT_X11_NO_MITSHM: "1"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+      UNITREE_NET_IFACE: ${UNITREE_NET_IFACE:-lo}
+      CYCLONEDDS_HOME: /opt/cyclonedds
+    volumes:
+      - .:/workspaces/robot
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev/shm:/dev/shm
+    working_dir: /workspaces/robot
+    command: sleep infinity
