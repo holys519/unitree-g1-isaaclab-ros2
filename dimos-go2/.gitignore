@@ -1,0 +1,13 @@
+# Local machine settings
+.env
+.env.*
+!.env.example
+
+# Runtime workspace data
+workspace/*
+!workspace/.gitkeep
+
+# Python/cache artifacts
+__pycache__/
+*.pyc
+.pytest_cache/

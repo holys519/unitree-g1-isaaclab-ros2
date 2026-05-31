@@ -1,0 +1,26 @@
+services:
+  dimos-go2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dimos-go2:cu124
+    container_name: ${CONTAINER_NAME:-dimos-go2-cu124}
+    network_mode: host
+    ipc: host
+    privileged: true
+    shm_size: 8gb
+    stdin_open: true
+    tty: true
+    gpus: all
+    environment:
+      DISPLAY: ${DISPLAY:-}
+      NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics
+      ROBOT_IP: ${ROBOT_IP:-}
+    volumes:
+      - ./workspace:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /run/dbus:/run/dbus:rw
+      - /var/run/dbus:/var/run/dbus:rw
+      - /dev:/dev
+    command: sleep infinity
